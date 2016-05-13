@@ -7,7 +7,49 @@
 //
 
 #import "LocationHelper.h"
+#import <UIKit/UIKit.h>
+
+@interface LocationHelper()
+
+@property CLLocationManager *locationManager;
+@property CGFloat latitude;
+@property CGFloat longitude;
+
+@end
 
 @implementation LocationHelper
 
+static id sharedInstance;
+static dispatch_once_t onceToken;
+
++ (instancetype)sharedInstance
+{
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
+-(instancetype)init{
+    if (self = [super init]) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.delegate = self;
+        [self.locationManager requestWhenInUseAuthorization];
+        [self.locationManager startUpdatingLocation];
+    }
+    return self;
+}
+
+-(void)getCurrentLocation{
+    NSLog(@"in method %f, %f", self.latitude, self.longitude);
+}
+
+#pragma mark - Location manager delegate
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    CLLocation *location = [locations lastObject];
+    self.latitude = location.coordinate.latitude;
+    self.longitude = location.coordinate.longitude;
+    NSLog(@"got it! %f, %f", self.latitude, self.longitude);
+}
 @end

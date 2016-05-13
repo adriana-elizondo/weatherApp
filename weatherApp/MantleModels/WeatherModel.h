@@ -8,7 +8,7 @@
 
 #import <Mantle/Mantle.h>
 
-@interface WeatherModel : MTLModel
+@interface WeatherModel : MTLModel<MTLJSONSerializing>
 @property (nonatomic, strong) NSString *weather;
 @property (nonatomic, strong) NSString *weatherDescription;
 @end

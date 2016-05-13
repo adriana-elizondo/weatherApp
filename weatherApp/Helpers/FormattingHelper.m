@@ -10,4 +10,15 @@
 
 @implementation FormattingHelper
 
++(NSString *)currentTime{
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    return [dateFormatter stringFromDate:[NSDate date]];
+}
+
++(NSString *)currentDate{
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM dd"];
+    return [dateFormatter stringFromDate:[NSDate date]];
+}
 @end

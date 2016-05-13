@@ -7,7 +7,11 @@
 //
 
 #import <Mantle/Mantle.h>
+#import <UIKit/UIKit.h>
 
-@interface MainDataModel : MTLModel
-
+@interface MainDataModel : MTLModel<MTLJSONSerializing>
+@property (nonatomic, assign) CGFloat temperature;
+@property (nonatomic, assign) CGFloat temperatureMin;
+@property (nonatomic, assign) CGFloat temperatureMax;
+@property (nonatomic, assign) CGFloat humidity;
 @end

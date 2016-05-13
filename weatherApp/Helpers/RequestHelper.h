@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^RequestCompletion)(id responseObject, NSError *error);
+
 @interface RequestHelper : NSObject
+
++(void)getRequestWithUrl:(NSString *)url parameters:(NSDictionary *)parameters andCompletionBlock:(RequestCompletion)completionBlock;
 
 @end

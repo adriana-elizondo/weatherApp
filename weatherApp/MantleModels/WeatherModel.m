@@ -12,10 +12,13 @@
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{
-             @"temperature": @"temp",
-             @"temperatureMin": @"temp_min",
-             @"temperatureMax": @"temp_max",
-             @"humidity": @"humidity"
+             @"weather": @"main",
+             @"weatherDescription": @"description"
              };
+}
+
+-(void)setNilValueForKey:(NSString *)key
+{
+    [self setValue:@0 forKey:key];
 }
 @end

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Adriana Elizondo Aguayo. All rights reserved.
 //
 #import "ForecastModel.h"
-#import "CoordinatesModel.h"
+#import "CityModel.h"
 #import "MeasurementModel.h"
 
 @implementation ForecastModel
@@ -14,21 +14,23 @@
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{
-             @"cityId": @"id",
-             @"name": @"name",
-             @"country": @"country",
-             @"coordinates": @"coord",
+             @"city": @"city",
              @"measureMeantsList": @"list"
              };
-}
-
-+(NSValueTransformer *)coordinatesJSONTransformer
-{
-    return [MTLJSONAdapter arrayTransformerWithModelClass:[CoordinatesModel class]];
 }
 
 +(NSValueTransformer *)measureMeantsListJSONTransformer
 {
     return [MTLJSONAdapter arrayTransformerWithModelClass:[MeasurementModel class]];
+}
+
++(NSValueTransformer *)cityJSONTransformer
+{
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[CityModel class]];
+}
+
+-(void)setNilValueForKey:(NSString *)key
+{
+    [self setValue:@0 forKey:key];
 }
 @end

@@ -10,4 +10,19 @@
 
 @implementation CityModel
 
++(NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{
+             @"cityId": @"id",
+             @"name": @"name",
+             @"country": @"country",
+             @"longitude": @"coord.lon",
+             @"latitude": @"coord.lat"
+             };
+}
+
+-(void)setNilValueForKey:(NSString *)key
+{
+    [self setValue:@0 forKey:key];
+}
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LocationHelper.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    //Start getting location of user
+    [LocationHelper sharedInstance];
     return YES;
 }
 
