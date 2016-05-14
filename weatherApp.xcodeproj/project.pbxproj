@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C311CE70F4E00F38C41 /* SearchHelper.m */; settings = {ASSET_TAGS = (); }; };
+		26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C381CE7300A00F38C41 /* ConditionStatus.m */; settings = {ASSET_TAGS = (); }; };
+		2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634C7F91CE705F500DFC654 /* SearchViewController.m */; settings = {ASSET_TAGS = (); }; };
 		603D60AC1CE46D2A004D5A4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AB1CE46D2A004D5A4B /* main.m */; };
 		603D60AF1CE46D2A004D5A4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AE1CE46D2A004D5A4B /* AppDelegate.m */; };
 		603D60B51CE46D2A004D5A4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603D60B31CE46D2A004D5A4B /* Main.storyboard */; };
@@ -30,6 +34,14 @@
 
 /* Begin PBXFileReference section */
 		24FDF20A871EBC3E41099329 /* Pods-weatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weatherApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-weatherApp/Pods-weatherApp.debug.xcconfig"; sourceTree = "<group>"; };
+		26054C301CE70F4E00F38C41 /* SearchHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchHelper.h; path = Helpers/SearchHelper.h; sourceTree = "<group>"; };
+		26054C311CE70F4E00F38C41 /* SearchHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchHelper.m; path = Helpers/SearchHelper.m; sourceTree = "<group>"; };
+		26054C341CE71B7A00F38C41 /* WeatherCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeatherCollectionViewCell.h; path = CollectiomViewCells/WeatherCollectionViewCell.h; sourceTree = "<group>"; };
+		26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeatherCollectionViewCell.m; path = CollectiomViewCells/WeatherCollectionViewCell.m; sourceTree = "<group>"; };
+		26054C371CE7300A00F38C41 /* ConditionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConditionStatus.h; path = Helpers/ConditionStatus.h; sourceTree = "<group>"; };
+		26054C381CE7300A00F38C41 /* ConditionStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConditionStatus.m; path = Helpers/ConditionStatus.m; sourceTree = "<group>"; };
+		2634C7F81CE705F500DFC654 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = ViewControllers/SearchViewController.h; sourceTree = "<group>"; };
+		2634C7F91CE705F500DFC654 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = ViewControllers/SearchViewController.m; sourceTree = "<group>"; };
 		603D60A71CE46D2A004D5A4B /* weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		603D60AB1CE46D2A004D5A4B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		603D60AD1CE46D2A004D5A4B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -88,6 +100,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		26054C2F1CE70F2500F38C41 /* NetworkOperations */ = {
+			isa = PBXGroup;
+			children = (
+				60895F2C1CE5A90400A40C86 /* BaseRequestParameters.h */,
+				60895F2D1CE5A90400A40C86 /* BaseRequestParameters.m */,
+			);
+			name = NetworkOperations;
+			sourceTree = "<group>";
+		};
+		26054C331CE71B6200F38C41 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				26054C341CE71B7A00F38C41 /* WeatherCollectionViewCell.h */,
+				26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */,
+			);
+			name = CollectionViewCells;
+			sourceTree = "<group>";
+		};
 		603D609E1CE46D2A004D5A4B = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +139,8 @@
 		603D60A91CE46D2A004D5A4B /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				26054C331CE71B6200F38C41 /* CollectionViewCells */,
+				26054C2F1CE70F2500F38C41 /* NetworkOperations */,
 				60895F111CE5962900A40C86 /* ViewControllers */,
 				60895ED91CE58C7C00A40C86 /* MantleModels */,
 				60CCBF771CE5881600C85689 /* Helpers */,
@@ -155,6 +187,8 @@
 			children = (
 				60895F121CE5964200A40C86 /* HomeViewController.h */,
 				60895F131CE5964200A40C86 /* HomeViewController.m */,
+				2634C7F81CE705F500DFC654 /* SearchViewController.h */,
+				2634C7F91CE705F500DFC654 /* SearchViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -169,8 +203,6 @@
 		60CCBF771CE5881600C85689 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				60895F2C1CE5A90400A40C86 /* BaseRequestParameters.h */,
-				60895F2D1CE5A90400A40C86 /* BaseRequestParameters.m */,
 				60895F291CE5A8B300A40C86 /* CityHelper.h */,
 				60895F2A1CE5A8B300A40C86 /* CityHelper.m */,
 				60895F1A1CE5A2C400A40C86 /* FormattingHelper.h */,
@@ -179,6 +211,10 @@
 				60895F181CE5980300A40C86 /* LocationHelper.m */,
 				60CCBF781CE5892F00C85689 /* RequestHelper.h */,
 				60CCBF791CE5892F00C85689 /* RequestHelper.m */,
+				26054C301CE70F4E00F38C41 /* SearchHelper.h */,
+				26054C311CE70F4E00F38C41 /* SearchHelper.m */,
+				26054C371CE7300A00F38C41 /* ConditionStatus.h */,
+				26054C381CE7300A00F38C41 /* ConditionStatus.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -314,19 +350,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				60895F281CE5A4A500A40C86 /* MeasurementModel.m in Sources */,
+				26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */,
 				60895F221CE5A36800A40C86 /* ForecastModel.m in Sources */,
 				60895F371CE5B5BA00A40C86 /* WeatherModel.m in Sources */,
 				60895F191CE5980300A40C86 /* LocationHelper.m in Sources */,
 				60895F3A1CE5B82B00A40C86 /* CityModel.m in Sources */,
 				60CCBF511CE5816C00C85689 /* weatherApp.xcdatamodeld in Sources */,
 				60895F141CE5964200A40C86 /* HomeViewController.m in Sources */,
+				2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */,
 				60CCBF7A1CE5892F00C85689 /* RequestHelper.m in Sources */,
 				603D60AF1CE46D2A004D5A4B /* AppDelegate.m in Sources */,
+				26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */,
 				60895F2B1CE5A8B300A40C86 /* CityHelper.m in Sources */,
 				60895F341CE5B53F00A40C86 /* MainDataModel.m in Sources */,
 				60895F1C1CE5A2C400A40C86 /* FormattingHelper.m in Sources */,
 				60895F2E1CE5A90400A40C86 /* BaseRequestParameters.m in Sources */,
 				603D60AC1CE46D2A004D5A4B /* main.m in Sources */,
+				26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
