@@ -44,7 +44,7 @@
     ConditionStatus *status = [[ConditionStatus alloc] init];
     if ([weather.weather isEqualToString:@"Clear"]) {
         status.contidionImage = [UIImage imageNamed:@"clear"];
-        status.conditionMessage = @"The sky is clear!! Go out and enjoy the nice day!";
+        status.conditionMessage = [NSString stringWithFormat:@"%@! Go out and enjoy the nice day!!", weather.weatherDescription];
         status.conditionColor = [UIColor colorWithRed:229/255.0f green:200/255.0f blue:81/255.0f alpha:1.0];
         return status;
     }
@@ -64,7 +64,7 @@
             
         }else if ([weather.description containsString:@"moderate"]){
             status.contidionImage = [UIImage imageNamed:@"moderate_rain"];
-            status.conditionMessage = @"";
+            status.conditionMessage = [NSString stringWithFormat:@"%@! Don't worry you can still survive", weather.weatherDescription];;
         }else{
             status.contidionImage = [UIImage imageNamed:@"moderate_rain"];
             status.conditionMessage = weather.description;
@@ -77,26 +77,32 @@
     
     if ([weather.weather isEqualToString:@"Clouds"]) {
         if ([weather.description containsString:@"broken"]) {
-            status.contidionImage = [UIImage imageNamed:@"heavy_rain"];
+            status.contidionImage = [UIImage imageNamed:@"overcast_clouds"];
             status.conditionMessage = @"";
             
         }else if ([weather.description containsString:@"scattered"]){
-            status.contidionImage = [UIImage imageNamed:@"scattered"];
+            status.contidionImage = [UIImage imageNamed:@"scattered_clouds"];
             status.conditionMessage = @"RUUUUN FOR YOOOOUR LIIIIFEEEE";
             
         }else if ([weather.description containsString:@"few"]){
-            status.contidionImage = [UIImage imageNamed:@"light_rain"];
+            status.contidionImage = [UIImage imageNamed:@"few_clouds"];
             status.conditionMessage = @"It's only light rain don't be a baby and go outside!";
             
         }else if ([weather.description containsString:@"overcast"]){
-            status.contidionImage = [UIImage imageNamed:@"moderate_rain"];
+            status.contidionImage = [UIImage imageNamed:@"overcast_clouds"];
             status.conditionMessage = @"";
         }else{
-            
-            
+            status.contidionImage = [UIImage imageNamed:@"cloud"];
+            status.conditionMessage = @"";
         }
         
-        status.conditionColor = [UIColor colorWithRed:204/255.0f green:204/255.0f blue:204/255.0f alpha:1.0];
+        if ([weather.weather isEqualToString:@"Snow"]) {
+            status.contidionImage = [UIImage imageNamed:@"snow"];
+            status.conditionColor = [UIColor colorWithRed:50/255.0f green:190/255.0f blue:188/255.0f alpha:1.0];
+            return status;
+        }
+        
+        status.conditionColor = [UIColor colorWithRed:83/255.0f green:92/255.0f blue:104/255.0f alpha:1.0];
         return status;
 
     }

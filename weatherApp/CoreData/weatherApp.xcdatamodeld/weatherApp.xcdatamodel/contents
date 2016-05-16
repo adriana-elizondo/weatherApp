@@ -1,57 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F1509" minimumToolsVersion="Xcode 7.0">
     <entity name="City" representedClassName="City" syncable="YES">
         <attribute name="cityId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="coordinates" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Coordinates" inverseName="city" inverseEntity="Coordinates" syncable="YES"/>
-        <relationship name="mainInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MainInfo" inverseName="city" inverseEntity="MainInfo" syncable="YES"/>
-        <relationship name="sysInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SysInfo" inverseName="city" inverseEntity="SysInfo" syncable="YES"/>
-        <relationship name="weather" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WeatherModel" inverseName="city" inverseEntity="WeatherModel" syncable="YES"/>
-        <relationship name="wind" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Wind" inverseName="city" inverseEntity="Wind" syncable="YES"/>
-    </entity>
-    <entity name="Coordinates" representedClassName="Coordinates" syncable="YES">
-        <attribute name="coordinateId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="coordinates" inverseEntity="City" syncable="YES"/>
-    </entity>
-    <entity name="MainInfo" representedClassName="MainInfo" syncable="YES">
-        <attribute name="grnd_level" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="humidity" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="mainInfoId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="pressure" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="sea_level" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="temp_max" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="temp_min" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="mainInfo" inverseEntity="City" syncable="YES"/>
-    </entity>
-    <entity name="SysInfo" representedClassName="SysInfo" syncable="YES">
-        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="message" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sunrise" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="sunset" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="sysInfoId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="sysInfo" inverseEntity="City" syncable="YES"/>
-    </entity>
-    <entity name="WeatherModel" representedClassName="WeatherModel" syncable="YES">
-        <attribute name="main" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="weatherDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="weatherId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="weather" inverseEntity="City" syncable="YES"/>
-    </entity>
-    <entity name="Wind" representedClassName="Wind" syncable="YES">
-        <attribute name="degree" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="windId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="wind" inverseEntity="City" syncable="YES"/>
     </entity>
     <elements>
-        <element name="City" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Coordinates" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="MainInfo" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="SysInfo" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="WeatherModel" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Wind" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="City" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

@@ -11,6 +11,9 @@
 		26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C381CE7300A00F38C41 /* ConditionStatus.m */; settings = {ASSET_TAGS = (); }; };
 		2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634C7F91CE705F500DFC654 /* SearchViewController.m */; settings = {ASSET_TAGS = (); }; };
+		26ABCCE11CE89AEC0044BB6F /* City+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		26ABCCE21CE89AEC0044BB6F /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE01CE89AEC0044BB6F /* City.m */; settings = {ASSET_TAGS = (); }; };
+		26ABCCE51CE89B3A0044BB6F /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */; settings = {ASSET_TAGS = (); }; };
 		603D60AC1CE46D2A004D5A4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AB1CE46D2A004D5A4B /* main.m */; };
 		603D60AF1CE46D2A004D5A4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AE1CE46D2A004D5A4B /* AppDelegate.m */; };
 		603D60B51CE46D2A004D5A4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603D60B31CE46D2A004D5A4B /* Main.storyboard */; };
@@ -42,6 +45,12 @@
 		26054C381CE7300A00F38C41 /* ConditionStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConditionStatus.m; path = Helpers/ConditionStatus.m; sourceTree = "<group>"; };
 		2634C7F81CE705F500DFC654 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = ViewControllers/SearchViewController.h; sourceTree = "<group>"; };
 		2634C7F91CE705F500DFC654 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = ViewControllers/SearchViewController.m; sourceTree = "<group>"; };
+		26ABCCDD1CE89AEC0044BB6F /* City+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "City+CoreDataProperties.h"; path = "CoreData/City+CoreDataProperties.h"; sourceTree = "<group>"; };
+		26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "City+CoreDataProperties.m"; path = "CoreData/City+CoreDataProperties.m"; sourceTree = "<group>"; };
+		26ABCCDF1CE89AEC0044BB6F /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = City.h; path = CoreData/City.h; sourceTree = "<group>"; };
+		26ABCCE01CE89AEC0044BB6F /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = City.m; path = CoreData/City.m; sourceTree = "<group>"; };
+		26ABCCE31CE89B3A0044BB6F /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataHelper.h; path = Helpers/CoreDataHelper.h; sourceTree = "<group>"; };
+		26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataHelper.m; path = Helpers/CoreDataHelper.m; sourceTree = "<group>"; };
 		603D60A71CE46D2A004D5A4B /* weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		603D60AB1CE46D2A004D5A4B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		603D60AD1CE46D2A004D5A4B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -118,6 +127,17 @@
 			name = CollectionViewCells;
 			sourceTree = "<group>";
 		};
+		26ABCCDC1CE89ADE0044BB6F /* CoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				26ABCCDD1CE89AEC0044BB6F /* City+CoreDataProperties.h */,
+				26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */,
+				26ABCCDF1CE89AEC0044BB6F /* City.h */,
+				26ABCCE01CE89AEC0044BB6F /* City.m */,
+			);
+			name = CoreDataModel;
+			sourceTree = "<group>";
+		};
 		603D609E1CE46D2A004D5A4B = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +159,7 @@
 		603D60A91CE46D2A004D5A4B /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				26ABCCDC1CE89ADE0044BB6F /* CoreDataModel */,
 				26054C331CE71B6200F38C41 /* CollectionViewCells */,
 				26054C2F1CE70F2500F38C41 /* NetworkOperations */,
 				60895F111CE5962900A40C86 /* ViewControllers */,
@@ -215,6 +236,8 @@
 				26054C311CE70F4E00F38C41 /* SearchHelper.m */,
 				26054C371CE7300A00F38C41 /* ConditionStatus.h */,
 				26054C381CE7300A00F38C41 /* ConditionStatus.m */,
+				26ABCCE31CE89B3A0044BB6F /* CoreDataHelper.h */,
+				26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -349,15 +372,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26ABCCE11CE89AEC0044BB6F /* City+CoreDataProperties.m in Sources */,
 				60895F281CE5A4A500A40C86 /* MeasurementModel.m in Sources */,
 				26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */,
 				60895F221CE5A36800A40C86 /* ForecastModel.m in Sources */,
 				60895F371CE5B5BA00A40C86 /* WeatherModel.m in Sources */,
 				60895F191CE5980300A40C86 /* LocationHelper.m in Sources */,
+				26ABCCE51CE89B3A0044BB6F /* CoreDataHelper.m in Sources */,
 				60895F3A1CE5B82B00A40C86 /* CityModel.m in Sources */,
 				60CCBF511CE5816C00C85689 /* weatherApp.xcdatamodeld in Sources */,
 				60895F141CE5964200A40C86 /* HomeViewController.m in Sources */,
 				2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */,
+				26ABCCE21CE89AEC0044BB6F /* City.m in Sources */,
 				60CCBF7A1CE5892F00C85689 /* RequestHelper.m in Sources */,
 				603D60AF1CE46D2A004D5A4B /* AppDelegate.m in Sources */,
 				26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */,
