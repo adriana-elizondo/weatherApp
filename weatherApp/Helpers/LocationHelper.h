@@ -11,7 +11,7 @@
 
 @protocol LocationHelperDelegate<NSObject>
 
--(void)updatedLocationWithCoordinate:(NSArray *)coordinate;
+-(void)updatedLocationWithCity:(NSString *)city;
 
 @end
 

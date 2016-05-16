@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
 @property (weak, nonatomic) IBOutlet UITableView *citiesAddedTableView;
+@property (weak, nonatomic) IBOutlet UIButton *locationButton;
 
 @property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, strong) NSMutableArray *citiesAdded;
@@ -47,6 +48,7 @@
 - (IBAction)searchButtonClicked:(id)sender {
     self.searchBar.hidden = NO;
     self.searchButton.hidden = YES;
+    self.locationButton.hidden = YES;
     [self.searchBar becomeFirstResponder];
 }
 
@@ -106,6 +108,7 @@
     [UIView animateWithDuration:.7 animations:^{
         self.searchBar.hidden = YES;
         self.searchButton.hidden = NO;
+        self.locationButton.hidden = NO;
     }];
 }
 
@@ -131,7 +134,7 @@
 }
 
 #pragma mark - Location delegate
--(void)updatedLocationWithCoordinate:(NSArray *)coordinate{
+-(void)updatedLocationWithCity:(NSString *)city{
     
 }
 

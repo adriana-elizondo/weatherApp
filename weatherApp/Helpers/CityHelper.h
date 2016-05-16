@@ -14,6 +14,7 @@ typedef void (^ForecastCompletion)(ForecastModel *response, NSError *error);
 @interface CityHelper : NSObject
 
 +(void)forecastForcityWithName:(NSString *)cityName WithCompletion:(ForecastCompletion)completionBlock;
++(void)forecastForNextDaysForCity:(NSString *)cityName WithCompletion:(ForecastCompletion)completionBlock;
 +(City *)getCityWithName:(NSString *)name;
 
 @end

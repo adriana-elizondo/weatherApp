@@ -34,6 +34,30 @@
 
 @end
 
+@interface NextDaysRequestParameters : BaseRequestParameters
+
+@property (nonatomic, strong) NSString *queryParameter;
+@property (nonatomic, assign) int count;
+
+@end
+
+@implementation NextDaysRequestParameters
+
++(NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    NSDictionary *baseKeyPaths = [super JSONKeyPathsByPropertyKey];
+    NSDictionary *classKeyPath = @{
+                                   @"queryParameter": @"q",
+                                   @"count": @"cnt",
+                                   };
+    
+    NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] initWithDictionary:baseKeyPaths];
+    [resultDictionary addEntriesFromDictionary:classKeyPath];
+    return resultDictionary;
+}
+
+@end
+
 @implementation CityHelper
 
 +(void)forecastForcityWithName:(NSString *)cityName WithCompletion:(ForecastCompletion)completionBlock{
@@ -53,6 +77,26 @@
 
     }];
 
+}
+
++(void)forecastForNextDaysForCity:(NSString *)cityName WithCompletion:(ForecastCompletion)completionBlock{
+    
+    NextDaysRequestParameters *parameters = [[NextDaysRequestParameters alloc] init];
+    parameters.queryParameter = cityName;
+    parameters.count = 7;
+    
+    [RequestHelper getRequestWithUrl:@"http://api.openweathermap.org/data/2.5/forecast/daily" parameters:[parameters parametersDictionary] andCompletionBlock:^(id responseObject, NSError *error) {
+        NSError *parseError = nil;
+        ForecastModel *cityResponse = [MTLJSONAdapter modelOfClass:[ForecastModel class] fromJSONDictionary:responseObject error:&parseError];
+        
+        if (parseError || error) {
+            completionBlock(nil, error);
+        }else{
+            completionBlock(cityResponse, nil);
+        }
+        
+    }];
+    
 }
 
 +(City *)getCityWithName:(NSString *)name{

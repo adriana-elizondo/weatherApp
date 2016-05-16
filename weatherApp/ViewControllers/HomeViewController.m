@@ -9,6 +9,7 @@
 #import "CityModel.h"
 #import "ConditionStatus.h"
 #import "ForecastModel.h"
+#import "ForecastTableViewCell.h"
 #import "FormattingHelper.h"
 #import "HomeViewController.h"
 #import "LocationHelper.h"
@@ -17,20 +18,19 @@
 #import "SearchHelper.h"
 #import "WeatherCollectionViewCell.h"
 
-@interface HomeViewController ()<UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *currentTime;
+@interface HomeViewController ()<UISearchBarDelegate, UISearchDisplayDelegate,UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *currentDate;
 @property (weak, nonatomic) IBOutlet UILabel *currentTemperature;
-@property (weak, nonatomic) IBOutlet UIButton *celsiusButton;
-@property (weak, nonatomic) IBOutlet UIButton *farenheitButton;
 @property (weak, nonatomic) IBOutlet UIImageView *conditionImage;
 @property (weak, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *maxMinTemperature;
 @property (weak, nonatomic) IBOutlet UICollectionView *forecastCollectionView;
+@property (weak, nonatomic) IBOutlet UITableView *foreCastTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *forecastTableViewHeight;
 
-@property NSString *currentUnit;
-@property NSArray *laterTodayForecast;
-
+@property (nonatomic, strong) NSString *currentUnit;
+@property (nonatomic, strong) NSArray *laterTodayForecast;
+@property (nonatomic, strong) NSArray *nextDaysForecast;
 
 @end
 
@@ -41,6 +41,7 @@
     
     self.currentUnit = @"°C";
     self.laterTodayForecast = [NSArray new];
+    self.nextDaysForecast = [NSArray new];
     self.searchDisplayController.searchResultsTableView.tableFooterView = [[UIView alloc] init];
 }
 
@@ -54,11 +55,10 @@
 }
 
 -(void)updateUiWithForecast:(ForecastModel *)forecast{
-    self.currentTime.text = [FormattingHelper currentTime];
     self.currentDate.text = [FormattingHelper currentDate];
     self.cityNameLabel.text = forecast.city.name;
     
-    MeasurementModel *latestMeasurement = [forecast.measureMeantsList objectAtIndex:0];
+    MeasurementModel *latestMeasurement = (MeasurementModel *)[forecast.measureMeantsList objectAtIndex:0];
     [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
     [self.conditionImage setImage:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].contidionImage];
     self.currentTemperature.text = [NSString stringWithFormat:@"%i °", (int)latestMeasurement.mainData.temperature];
@@ -108,6 +108,53 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 10, 0, 10);
 }
+
+#pragma mark - Tableview datasource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1.0f;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.nextDaysForecast.count > 0 ? self.nextDaysForecast.count : 1.0;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 80.0f;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ForecastTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"forecastCell"];
+    cell.backgroundColor = indexPath.row %2 == 0 ? [UIColor clearColor] : [UIColor colorWithWhite:5.0 alpha:.5];
+    if (indexPath.row == 0) {
+        cell.showHideButton.hidden = NO;
+        cell.dateLabel.hidden = YES;
+        cell.forecastImage.hidden = YES;
+        [cell.showHideButton addTarget:self action:@selector(showForecast) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        MeasurementModel *current = [self.nextDaysForecast objectAtIndex:indexPath.row];
+        cell.showHideButton.hidden = YES;
+        cell.forecastImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
+    }
+    return cell;
+}
+
+- (void)showForecast{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [CityHelper forecastForNextDaysForCity:self.cityName WithCompletion:^(ForecastModel *response, NSError *error) {
+        if (!error) {
+            self.nextDaysForecast = response.measureMeantsList;
+            [self.foreCastTableView setBackgroundColor:self.view.backgroundColor];
+            [self.foreCastTableView reloadData];
+            self.forecastTableViewHeight.constant = self.forecastTableViewHeight.constant == 80 ? self.view.frame.size.height - 125 : 80;
+            [UIView animateWithDuration:.5f delay:0.0f options:UIViewAnimationOptionTransitionCurlUp animations:^{
+                [self.view layoutIfNeeded];
+            }completion:^(BOOL finished) {
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            }];
+
+        }
+    }];
+    }
 
 - (IBAction)goBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

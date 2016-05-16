@@ -42,6 +42,21 @@ static dispatch_once_t onceToken;
 #pragma mark - Location manager delegate
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     CLLocation *location = [locations lastObject];
-    [self.delegate updatedLocationWithCoordinate:@[@(location.coordinate.latitude), @(location.coordinate.longitude)]];
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+    [geocoder reverseGeocodeLocation:location
+                   completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         if (error){
+             NSLog(@"Geocode failed with error: %@", error);
+             return;
+         }
+         
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+         NSLog(@"locality %@",placemark.locality);
+         NSLog(@"postalCode %@",placemark.postalCode);
+        
+        [self.delegate updatedLocationWithCity:placemark.locality];
+     }];
 }
 @end

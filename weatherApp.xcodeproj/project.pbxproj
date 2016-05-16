@@ -10,6 +10,7 @@
 		26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C311CE70F4E00F38C41 /* SearchHelper.m */; };
 		26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */; };
 		26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C381CE7300A00F38C41 /* ConditionStatus.m */; };
+		262221FE1CE98B41008245CB /* ForecastTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 262221FD1CE98B41008245CB /* ForecastTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634C7F91CE705F500DFC654 /* SearchViewController.m */; };
 		26ABCCE11CE89AEC0044BB6F /* City+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */; };
 		26ABCCE21CE89AEC0044BB6F /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE01CE89AEC0044BB6F /* City.m */; };
@@ -43,6 +44,8 @@
 		26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeatherCollectionViewCell.m; path = CollectiomViewCells/WeatherCollectionViewCell.m; sourceTree = "<group>"; };
 		26054C371CE7300A00F38C41 /* ConditionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConditionStatus.h; path = Helpers/ConditionStatus.h; sourceTree = "<group>"; };
 		26054C381CE7300A00F38C41 /* ConditionStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConditionStatus.m; path = Helpers/ConditionStatus.m; sourceTree = "<group>"; };
+		262221FC1CE98B41008245CB /* ForecastTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForecastTableViewCell.h; path = TableViewCells/ForecastTableViewCell.h; sourceTree = "<group>"; };
+		262221FD1CE98B41008245CB /* ForecastTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForecastTableViewCell.m; path = TableViewCells/ForecastTableViewCell.m; sourceTree = "<group>"; };
 		2634C7F81CE705F500DFC654 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = ViewControllers/SearchViewController.h; sourceTree = "<group>"; };
 		2634C7F91CE705F500DFC654 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = ViewControllers/SearchViewController.m; sourceTree = "<group>"; };
 		26ABCCDD1CE89AEC0044BB6F /* City+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "City+CoreDataProperties.h"; path = "CoreData/City+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -127,6 +130,15 @@
 			name = CollectionViewCells;
 			sourceTree = "<group>";
 		};
+		262221FB1CE98B26008245CB /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				262221FC1CE98B41008245CB /* ForecastTableViewCell.h */,
+				262221FD1CE98B41008245CB /* ForecastTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
 		26ABCCDC1CE89ADE0044BB6F /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +171,7 @@
 		603D60A91CE46D2A004D5A4B /* weatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				262221FB1CE98B26008245CB /* TableViewCells */,
 				26ABCCDC1CE89ADE0044BB6F /* CoreDataModel */,
 				26054C331CE71B6200F38C41 /* CollectionViewCells */,
 				26054C2F1CE70F2500F38C41 /* NetworkOperations */,
@@ -374,6 +387,7 @@
 				60895F3A1CE5B82B00A40C86 /* CityModel.m in Sources */,
 				60CCBF511CE5816C00C85689 /* weatherApp.xcdatamodeld in Sources */,
 				60895F141CE5964200A40C86 /* HomeViewController.m in Sources */,
+				262221FE1CE98B41008245CB /* ForecastTableViewCell.m in Sources */,
 				2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */,
 				26ABCCE21CE89AEC0044BB6F /* City.m in Sources */,
 				60CCBF7A1CE5892F00C85689 /* RequestHelper.m in Sources */,
