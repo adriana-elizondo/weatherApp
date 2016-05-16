@@ -15,6 +15,7 @@
 
 +(NSString *)currentTime;
 +(NSString *)currentDate;
++(NSString *)datePlusDays:(NSInteger)days;
 +(NSString*)maxMinTemperatureWithMeasurement:(MeasurementModel *)measurement andUnit:(NSString *)unit;
 +(NSArray *)filterResultsForToday:(NSArray *)arrayToFilter;
 +(NSString*)formatedTimeWithDate:(NSString *)date;

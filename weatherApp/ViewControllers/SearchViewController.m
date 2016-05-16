@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, strong) NSMutableArray *citiesAdded;
 @property (nonatomic, strong) City *currentCity;
+@property BOOL didUpdateLocation;
 
 @end
 
@@ -52,9 +53,9 @@
     [self.searchBar becomeFirstResponder];
 }
 
-
 - (IBAction)locationClicked:(id)sender {
-    [LocationHelper sharedInstance];
+    self.didUpdateLocation = NO;
+    [LocationHelper sharedInstance].delegate = self;
 }
 
 #pragma mark - Searchbar tableview delegate
@@ -93,7 +94,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        [self.citiesAdded addObject:[CityHelper getCityWithName:self.searchResults[indexPath.row]]];
+        City *city =[CityHelper getCityWithName:self.searchResults[indexPath.row]];
+        if (![self.citiesAdded containsObject:city]) {
+            [self.citiesAdded addObject:city];
+        }
         [self.searchDisplayController setActive:NO];
         [self.citiesAddedTableView reloadData];
     }else{
@@ -135,7 +139,18 @@
 
 #pragma mark - Location delegate
 -(void)updatedLocationWithCity:(NSString *)city{
-    
+    if (self.didUpdateLocation) {
+        return;
+    }
+    self.didUpdateLocation = YES;
+    self.currentCity = [CityHelper getCityWithName:city];
+    if (![self.citiesAdded containsObject:self.currentCity]) {
+        [self.citiesAdded addObject:self.currentCity];
+        [self.citiesAddedTableView reloadData];
+    }else{
+        [[[UIAlertView alloc] initWithTitle:@"" message:[NSString stringWithFormat:@"%@ is already in your list! Click on it for more details (:",city] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil] show];
+    }
+    [[LocationHelper sharedInstance] stopUpdatingLocation];
 }
 
 #pragma mark - Segue

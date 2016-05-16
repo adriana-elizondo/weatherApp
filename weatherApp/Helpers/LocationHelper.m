@@ -52,11 +52,11 @@ static dispatch_once_t onceToken;
          }
          
          CLPlacemark *placemark = [placemarks objectAtIndex:0];
-         NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
-         NSLog(@"locality %@",placemark.locality);
-         NSLog(@"postalCode %@",placemark.postalCode);
-        
         [self.delegate updatedLocationWithCity:placemark.locality];
      }];
+}
+
+-(void)stopUpdatingLocation{
+    [self.locationManager stopUpdatingLocation];
 }
 @end

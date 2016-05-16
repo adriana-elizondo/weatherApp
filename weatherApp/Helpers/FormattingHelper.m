@@ -21,8 +21,21 @@
     return [dateFormatter stringFromDate:[NSDate date]];
 }
 
++(NSString *)datePlusDays:(NSInteger)days{
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM dd"];
+    NSDate *dateDaysAgo = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                                    value:days
+                                                                   toDate:[NSDate date]
+                                                                  options:0];
+    return [dateFormatter stringFromDate:dateDaysAgo];
+}
+
 +(NSString *)parsedCityWithName:(NSString *)cityName{
-    return [cityName substringToIndex:[cityName rangeOfString:@","].location];
+    if ([cityName containsString:@","]) {
+        return [cityName substringToIndex:[cityName rangeOfString:@","].location];
+    }
+    return cityName;
 }
 
 +(NSString*)maxMinTemperatureWithMeasurement:(MeasurementModel *)measurement andUnit:(NSString *)unit{

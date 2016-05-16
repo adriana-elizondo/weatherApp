@@ -16,6 +16,7 @@
 #import "MainDataModel.h"
 #import "MeasurementModel.h"
 #import "SearchHelper.h"
+#import "WeatherModel.h"
 #import "WeatherCollectionViewCell.h"
 
 @interface HomeViewController ()<UISearchBarDelegate, UISearchDisplayDelegate,UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
@@ -27,10 +28,12 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *forecastCollectionView;
 @property (weak, nonatomic) IBOutlet UITableView *foreCastTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *forecastTableViewHeight;
+@property (weak, nonatomic) IBOutlet UILabel *weatherDescriptionLabel;
 
 @property (nonatomic, strong) NSString *currentUnit;
 @property (nonatomic, strong) NSArray *laterTodayForecast;
 @property (nonatomic, strong) NSArray *nextDaysForecast;
+@property BOOL isForecastShown;
 
 @end
 
@@ -59,11 +62,14 @@
     self.cityNameLabel.text = forecast.city.name;
     
     MeasurementModel *latestMeasurement = (MeasurementModel *)[forecast.measureMeantsList objectAtIndex:0];
-    [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
-    [self.conditionImage setImage:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].contidionImage];
-    self.currentTemperature.text = [NSString stringWithFormat:@"%i °", (int)latestMeasurement.mainData.temperature];
-    self.maxMinTemperature.text = [FormattingHelper maxMinTemperatureWithMeasurement:latestMeasurement andUnit:self.currentUnit];
+    WeatherModel *weather = latestMeasurement.weather[0];
+    self.weatherDescriptionLabel.text = weather.weatherDescription;
     
+    [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
+    [self.foreCastTableView setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
+    [self.conditionImage setImage:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].contidionImage];
+    self.currentTemperature.text = [NSString stringWithFormat:@"%i °C", (int)latestMeasurement.mainData.temperature];
+    self.maxMinTemperature.text = [FormattingHelper maxMinTemperatureWithMeasurement:latestMeasurement andUnit:self.currentUnit];
     [self.forecastCollectionView reloadData];
 }
 
@@ -134,27 +140,38 @@
         MeasurementModel *current = [self.nextDaysForecast objectAtIndex:indexPath.row];
         cell.showHideButton.hidden = YES;
         cell.forecastImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
+        cell.dateLabel.text = [FormattingHelper datePlusDays:indexPath.row];
     }
     return cell;
 }
 
 - (void)showForecast{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [CityHelper forecastForNextDaysForCity:self.cityName WithCompletion:^(ForecastModel *response, NSError *error) {
-        if (!error) {
-            self.nextDaysForecast = response.measureMeantsList;
-            [self.foreCastTableView setBackgroundColor:self.view.backgroundColor];
-            [self.foreCastTableView reloadData];
-            self.forecastTableViewHeight.constant = self.forecastTableViewHeight.constant == 80 ? self.view.frame.size.height - 125 : 80;
-            [UIView animateWithDuration:.5f delay:0.0f options:UIViewAnimationOptionTransitionCurlUp animations:^{
-                [self.view layoutIfNeeded];
-            }completion:^(BOOL finished) {
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-            }];
-
-        }
-    }];
+    if (self.nextDaysForecast.count > 0) {
+        [self animateTableView];
+    }else{
+        [CityHelper forecastForNextDaysForCity:self.cityName WithCompletion:^(ForecastModel *response, NSError *error) {
+            if (!error) {
+                self.nextDaysForecast = response.measureMeantsList;
+                [self.foreCastTableView reloadData];
+                [self animateTableView];
+            }
+        }];
     }
+    
+    }
+
+-(void)animateTableView{
+    self.forecastTableViewHeight.constant = !self.isForecastShown ? self.view.frame.size.height - 125 : 80;
+    [UIView animateWithDuration:.5f delay:0.0f options:UIViewAnimationOptionTransitionCurlUp animations:^{
+        [self.view layoutIfNeeded];
+    }completion:^(BOOL finished) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        self.isForecastShown = !self.isForecastShown;
+
+    }];
+
+}
 
 - (IBAction)goBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
