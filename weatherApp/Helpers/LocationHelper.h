@@ -7,10 +7,18 @@
 //
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@protocol LocationHelperDelegate<NSObject>
+
+-(void)updatedLocationWithCoordinate:(NSArray *)coordinate;
+
+@end
 
 @interface LocationHelper : NSObject<CLLocationManagerDelegate>
 
 + (instancetype)sharedInstance;
--(void)getCurrentLocation;
+
+@property (nonatomic, weak) id <LocationHelperDelegate> delegate;
 
 @end

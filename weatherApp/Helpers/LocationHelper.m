@@ -12,8 +12,6 @@
 @interface LocationHelper()
 
 @property CLLocationManager *locationManager;
-@property CGFloat latitude;
-@property CGFloat longitude;
 
 @end
 
@@ -41,15 +39,9 @@ static dispatch_once_t onceToken;
     return self;
 }
 
--(void)getCurrentLocation{
-    NSLog(@"in method %f, %f", self.latitude, self.longitude);
-}
-
 #pragma mark - Location manager delegate
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     CLLocation *location = [locations lastObject];
-    self.latitude = location.coordinate.latitude;
-    self.longitude = location.coordinate.longitude;
-    NSLog(@"got it! %f, %f", self.latitude, self.longitude);
+    [self.delegate updatedLocationWithCoordinate:@[@(location.coordinate.latitude), @(location.coordinate.longitude)]];
 }
 @end

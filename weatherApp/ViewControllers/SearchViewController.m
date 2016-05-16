@@ -5,18 +5,23 @@
 //  Created by Adriana Elizondo on 5/14/16.
 //  Copyright © 2016 Adriana Elizondo Aguayo. All rights reserved.
 //
+#import "City.h"
 #import "CityHelper.h"
 #import "CoreDataHelper.h"
+#import "FormattingHelper.h"
+#import "HomeViewController.h"
+#import "LocationHelper.h"
 #import "SearchHelper.h"
 #import "SearchViewController.h"
 
-@interface SearchViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SearchViewController ()<UITableViewDataSource, UITableViewDelegate, LocationHelperDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
 @property (weak, nonatomic) IBOutlet UITableView *citiesAddedTableView;
 
-@property NSMutableArray *searchResults;
-@property NSMutableArray *citiesAdded;
+@property (nonatomic, strong) NSMutableArray *searchResults;
+@property (nonatomic, strong) NSMutableArray *citiesAdded;
+@property (nonatomic, strong) City *currentCity;
 
 @end
 
@@ -24,14 +29,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.searchResults = [NSMutableArray new];
-    self.citiesAdded = [[NSMutableArray alloc] initWithArray:[CoreDataHelper allFromEntityWithName:@"City"]];
-    self.citiesAddedTableView.tableFooterView = [[UIView alloc] init];
+    [self setUp];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)setUp{
+    self.searchResults = [NSMutableArray new];
+    self.citiesAddedTableView.tableFooterView = [[UIView alloc] init];
+    self.citiesAdded = [[NSMutableArray alloc] initWithArray:[CoreDataHelper allFromEntityWithName:@"City"]];
+    [self.citiesAddedTableView reloadData];
 }
 
 - (IBAction)searchButtonClicked:(id)sender {
@@ -41,6 +51,10 @@
 }
 
 
+- (IBAction)locationClicked:(id)sender {
+    [LocationHelper sharedInstance];
+}
+
 #pragma mark - Searchbar tableview delegate
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -49,7 +63,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-     return self.searchResults.count;
+        return self.searchResults.count;
     }else{
         return self.citiesAdded.count;
     }
@@ -64,6 +78,10 @@
         }
         
         cell.textLabel.text = self.searchResults[indexPath.row];
+    }else{
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cityCell"];
+        City *city = self.citiesAdded[indexPath.row];
+        cell.textLabel.text = city.name;
     }
     
     return cell;
@@ -73,11 +91,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        NSDictionary *newCityDictionary = @{@"name" : self.searchBar.text};
-        [CoreDataHelper createNewEntityWithName:@"City" andDictionary:newCityDictionary];
-        
-        [self.citiesAdded addObject:self.searchBar.text];
-        [self.searchBar resignFirstResponder];
+        [self.citiesAdded addObject:[CityHelper getCityWithName:self.searchResults[indexPath.row]]];
+        [self.searchDisplayController setActive:NO];
+        [self.citiesAddedTableView reloadData];
+    }else{
+        self.currentCity = self.citiesAdded[indexPath.row];
+        [self performSegueWithIdentifier:@"cityDetails" sender:self];
     }
 }
 
@@ -111,5 +130,18 @@
     return NO;
 }
 
+#pragma mark - Location delegate
+-(void)updatedLocationWithCoordinate:(NSArray *)coordinate{
+    
+}
+
+#pragma mark - Segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"cityDetails"]) {
+        HomeViewController *homeViewController = (HomeViewController *)[segue destinationViewController];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        homeViewController.cityName = [FormattingHelper parsedCityWithName:self.currentCity.name];
+    }
+}
 
 @end

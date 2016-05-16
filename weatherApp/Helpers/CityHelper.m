@@ -6,7 +6,9 @@
 //  Copyright © 2016 Adriana Elizondo Aguayo. All rights reserved.
 //
 #import "BaseRequestParameters.h"
+#import "City.h"
 #import "CityHelper.h"
+#import "CoreDataHelper.h"
 #import "ForecastModel.h"
 #import "RequestHelper.h"
 
@@ -51,5 +53,18 @@
 
     }];
 
+}
+
++(City *)getCityWithName:(NSString *)name{
+    City *city= (City *)[CoreDataHelper entityWithName:@"City" attribute:@"name" value:name];
+    
+    if (!city) {
+        city = [City MR_createEntity];
+        city.name = name;
+        [CoreDataHelper saveCoreDataStackWithCompletion:^(NSError *error) {
+            NSLog(@"error to handle in the future %@", error);
+        }];
+    }
+    return city;
 }
 @end

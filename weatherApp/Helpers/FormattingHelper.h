@@ -19,5 +19,6 @@
 +(NSArray *)filterResultsForToday:(NSArray *)arrayToFilter;
 +(NSString*)formatedTimeWithDate:(NSString *)date;
 +(ConditionStatus *)conditionStatusWithWeather:(WeatherModel *)weather;
++(NSString *)parsedCityWithName:(NSString *)cityName;
 
 @end

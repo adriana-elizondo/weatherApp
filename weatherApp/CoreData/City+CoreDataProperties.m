@@ -13,7 +13,7 @@
 
 @implementation City (CoreDataProperties)
 
-@dynamic cityId;
+@dynamic cityID;
 @dynamic name;
 
 @end

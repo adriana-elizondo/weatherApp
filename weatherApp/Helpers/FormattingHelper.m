@@ -21,6 +21,10 @@
     return [dateFormatter stringFromDate:[NSDate date]];
 }
 
++(NSString *)parsedCityWithName:(NSString *)cityName{
+    return [cityName substringToIndex:[cityName rangeOfString:@","].location];
+}
+
 +(NSString*)maxMinTemperatureWithMeasurement:(MeasurementModel *)measurement andUnit:(NSString *)unit{
     return [NSString stringWithFormat:@"%i%@ ↑ / %i%@ ↓", (int)measurement.mainData.temperatureMax,unit, (int)measurement.mainData.temperatureMin, unit];
 }

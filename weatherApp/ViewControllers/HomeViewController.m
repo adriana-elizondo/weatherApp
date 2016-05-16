@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *celsiusButton;
 @property (weak, nonatomic) IBOutlet UIButton *farenheitButton;
 @property (weak, nonatomic) IBOutlet UIImageView *conditionImage;
-@property (weak, nonatomic) IBOutlet UILabel *cityName;
+@property (weak, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *maxMinTemperature;
 @property (weak, nonatomic) IBOutlet UICollectionView *forecastCollectionView;
 
@@ -44,6 +44,10 @@
     self.searchDisplayController.searchResultsTableView.tableFooterView = [[UIView alloc] init];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self getCityWithName:self.cityName];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -52,7 +56,7 @@
 -(void)updateUiWithForecast:(ForecastModel *)forecast{
     self.currentTime.text = [FormattingHelper currentTime];
     self.currentDate.text = [FormattingHelper currentDate];
-    self.cityName.text = forecast.city.name;
+    self.cityNameLabel.text = forecast.city.name;
     
     MeasurementModel *latestMeasurement = [forecast.measureMeantsList objectAtIndex:0];
     [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
@@ -64,13 +68,14 @@
 }
 
 #pragma mark - Get city from server
+
 -(void)getCityWithName:(NSString *)name{
     [CityHelper forecastForcityWithName:name WithCompletion:^(ForecastModel *response, NSError *error) {
+        self.laterTodayForecast = [FormattingHelper filterResultsForToday:response.measureMeantsList];
+        [self updateUiWithForecast:response];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        [self.searchDisplayController setActive:NO];
     }];
 }
-
 
 #pragma mark - CollectionViewDatasource
 
@@ -103,4 +108,9 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 10, 0, 10);
 }
+
+- (IBAction)goBack:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

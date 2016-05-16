@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C311CE70F4E00F38C41 /* SearchHelper.m */; settings = {ASSET_TAGS = (); }; };
-		26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C381CE7300A00F38C41 /* ConditionStatus.m */; settings = {ASSET_TAGS = (); }; };
-		2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634C7F91CE705F500DFC654 /* SearchViewController.m */; settings = {ASSET_TAGS = (); }; };
-		26ABCCE11CE89AEC0044BB6F /* City+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		26ABCCE21CE89AEC0044BB6F /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE01CE89AEC0044BB6F /* City.m */; settings = {ASSET_TAGS = (); }; };
-		26ABCCE51CE89B3A0044BB6F /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */; settings = {ASSET_TAGS = (); }; };
+		26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C311CE70F4E00F38C41 /* SearchHelper.m */; };
+		26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */; };
+		26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C381CE7300A00F38C41 /* ConditionStatus.m */; };
+		2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634C7F91CE705F500DFC654 /* SearchViewController.m */; };
+		26ABCCE11CE89AEC0044BB6F /* City+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */; };
+		26ABCCE21CE89AEC0044BB6F /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE01CE89AEC0044BB6F /* City.m */; };
+		26ABCCE51CE89B3A0044BB6F /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */; };
 		603D60AC1CE46D2A004D5A4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AB1CE46D2A004D5A4B /* main.m */; };
 		603D60AF1CE46D2A004D5A4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AE1CE46D2A004D5A4B /* AppDelegate.m */; };
 		603D60B51CE46D2A004D5A4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603D60B31CE46D2A004D5A4B /* Main.storyboard */; };
@@ -173,7 +173,6 @@
 				603D60BB1CE46D2A004D5A4B /* Info.plist */,
 				603D60AA1CE46D2A004D5A4B /* Supporting Files */,
 				60CCBF4F1CE5816C00C85689 /* weatherApp.xcdatamodeld */,
-				60CCBF521CE587E900C85689 /* CoreDataModels */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";
@@ -212,13 +211,6 @@
 				2634C7F91CE705F500DFC654 /* SearchViewController.m */,
 			);
 			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		60CCBF521CE587E900C85689 /* CoreDataModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = CoreDataModels;
 			sourceTree = "<group>";
 		};
 		60CCBF771CE5881600C85689 /* Helpers */ = {

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface City (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSNumber *cityId;
+@property (nullable, nonatomic, retain) NSNumber *cityID;
 @property (nullable, nonatomic, retain) NSString *name;
 
 @end
