@@ -21,7 +21,7 @@
 
 @property (nonatomic, weak) id <LocationHelperDelegate> delegate;
 
--(void)startUpdating;
 -(void)stopUpdatingLocation;
+-(void)startUpdatingLocation;
 
 @end

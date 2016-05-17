@@ -10,20 +10,16 @@
 #import "CoreDataHelper.h"
 #import "FormattingHelper.h"
 #import "HomeViewController.h"
-#import "LocationHelper.h"
 #import "SearchHelper.h"
 #import "SearchViewController.h"
 
-@interface SearchViewController ()<UITableViewDataSource, UITableViewDelegate, LocationHelperDelegate>
+@interface SearchViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
 @property (weak, nonatomic) IBOutlet UITableView *citiesAddedTableView;
-@property (weak, nonatomic) IBOutlet UIButton *locationButton;
 
 @property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, strong) NSMutableArray *citiesAdded;
 @property (nonatomic, strong) City *currentCity;
-@property BOOL didUpdateLocation;
 
 @end
 
@@ -31,7 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setUp];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,7 +34,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self setUp];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedCity" object:self.currentCity.name];
+}
+
 -(void)setUp{
+    [self.navigationItem setHidesBackButton:YES];
     self.searchResults = [NSMutableArray new];
     self.citiesAddedTableView.tableFooterView = [[UIView alloc] init];
     self.citiesAdded = [[NSMutableArray alloc] initWithArray:[CoreDataHelper allFromEntityWithName:@"City"]];
@@ -48,14 +53,7 @@
 
 - (IBAction)searchButtonClicked:(id)sender {
     self.searchBar.hidden = NO;
-    self.searchButton.hidden = YES;
-    self.locationButton.hidden = YES;
     [self.searchBar becomeFirstResponder];
-}
-
-- (IBAction)locationClicked:(id)sender {
-    self.didUpdateLocation = NO;
-    [LocationHelper sharedInstance].delegate = self;
 }
 
 #pragma mark - Searchbar tableview delegate
@@ -80,21 +78,49 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         
-        cell.textLabel.text = self.searchResults[indexPath.row];
+        if (self.searchResults.count > 0) {
+            cell.textLabel.text = self.searchResults[indexPath.row];
+        }
+        
     }else{
         cell = [tableView dequeueReusableCellWithIdentifier:@"cityCell"];
         City *city = self.citiesAdded[indexPath.row];
         cell.textLabel.text = city.name;
+        cell.textLabel.textColor = [UIColor whiteColor];
+        
+        UIImageView *imageView = [cell viewWithTag:3];
+        if ([city.isUserLocation boolValue]) {
+            [imageView setImage:[UIImage imageNamed:@"location"]];
+        }else{
+            imageView.hidden = YES;
+        }
     }
     
     return cell;
 }
 
-#pragma mark - Searchbar tableview delegate
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 80.0f;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        City *city = self.citiesAdded[indexPath.row];
+        [CoreDataHelper removeEntity:city];
+        [self.citiesAdded removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+    }
+}
+
+#pragma mark - tableview delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        City *city =[CityHelper getCityWithName:self.searchResults[indexPath.row]];
+        City *city =[CityHelper getCityWithName:self.searchResults[indexPath.row] isCurrentLocation:NO];
         if (![self.citiesAdded containsObject:city]) {
             [self.citiesAdded addObject:city];
         }
@@ -102,7 +128,7 @@
         [self.citiesAddedTableView reloadData];
     }else{
         self.currentCity = self.citiesAdded[indexPath.row];
-        [self performSegueWithIdentifier:@"cityDetails" sender:self];
+        [self goToCityDetails];
     }
 }
 
@@ -111,8 +137,6 @@
 -(void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller{
     [UIView animateWithDuration:.7 animations:^{
         self.searchBar.hidden = YES;
-        self.searchButton.hidden = NO;
-        self.locationButton.hidden = NO;
     }];
 }
 
@@ -137,29 +161,8 @@
     return NO;
 }
 
-#pragma mark - Location delegate
--(void)updatedLocationWithCity:(NSString *)city{
-    if (self.didUpdateLocation) {
-        return;
-    }
-    self.didUpdateLocation = YES;
-    self.currentCity = [CityHelper getCityWithName:city];
-    if (![self.citiesAdded containsObject:self.currentCity]) {
-        [self.citiesAdded addObject:self.currentCity];
-        [self.citiesAddedTableView reloadData];
-    }else{
-        [[[UIAlertView alloc] initWithTitle:@"" message:[NSString stringWithFormat:@"%@ is already in your list! Click on it for more details (:",city] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil] show];
-    }
-    [[LocationHelper sharedInstance] stopUpdatingLocation];
+#pragma mark - Go to city details
+-(void)goToCityDetails{
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
-#pragma mark - Segue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"cityDetails"]) {
-        HomeViewController *homeViewController = (HomeViewController *)[segue destinationViewController];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        homeViewController.cityName = [FormattingHelper parsedCityWithName:self.currentCity.name];
-    }
-}
-
 @end

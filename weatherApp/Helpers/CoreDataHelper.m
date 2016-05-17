@@ -20,6 +20,10 @@
     return [NSClassFromString(name) MR_findAll];
 }
 
++(BOOL)removeEntity:(NSManagedObject *)obj{
+    return [obj MR_deleteEntity];
+}
+
 +(NSManagedObject *)entityWithName:(NSString *)name attribute:(NSString *)attribute value:(id)value {
     NSEntityDescription *entity = [NSEntityDescription entityForName:name inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     if (entity) {

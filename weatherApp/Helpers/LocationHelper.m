@@ -56,6 +56,10 @@ static dispatch_once_t onceToken;
      }];
 }
 
+-(void)startUpdatingLocation{
+    [self.locationManager startUpdatingLocation];
+}
+
 -(void)stopUpdatingLocation{
     [self.locationManager stopUpdatingLocation];
 }

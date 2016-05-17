@@ -8,5 +8,4 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeViewController : UIViewController
-@property (nonatomic, strong) NSString *cityName;
 @end

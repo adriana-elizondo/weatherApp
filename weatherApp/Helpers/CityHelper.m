@@ -10,6 +10,7 @@
 #import "CityHelper.h"
 #import "CoreDataHelper.h"
 #import "ForecastModel.h"
+#import "FormattingHelper.h"
 #import "RequestHelper.h"
 
 @interface CityRequestParameters : BaseRequestParameters
@@ -99,12 +100,13 @@
     
 }
 
-+(City *)getCityWithName:(NSString *)name{
++(City *)getCityWithName:(NSString *)name isCurrentLocation:(BOOL)isCurrentLocation{
     City *city= (City *)[CoreDataHelper entityWithName:@"City" attribute:@"name" value:name];
     
     if (!city) {
         city = [City MR_createEntity];
-        city.name = name;
+        city.name = [FormattingHelper parsedCityWithName:name];
+        city.isUserLocation = @(isCurrentLocation);
         [CoreDataHelper saveCoreDataStackWithCompletion:^(NSError *error) {
             NSLog(@"error to handle in the future %@", error);
         }];

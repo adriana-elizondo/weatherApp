@@ -15,6 +15,6 @@ typedef void (^ForecastCompletion)(ForecastModel *response, NSError *error);
 
 +(void)forecastForcityWithName:(NSString *)cityName WithCompletion:(ForecastCompletion)completionBlock;
 +(void)forecastForNextDaysForCity:(NSString *)cityName WithCompletion:(ForecastCompletion)completionBlock;
-+(City *)getCityWithName:(NSString *)name;
++(City *)getCityWithName:(NSString *)name isCurrentLocation:(BOOL)isCurrentLocation;
 
 @end

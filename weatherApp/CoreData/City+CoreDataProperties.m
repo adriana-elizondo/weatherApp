@@ -15,5 +15,6 @@
 
 @dynamic cityID;
 @dynamic name;
+@dynamic isUserLocation;
 
 @end

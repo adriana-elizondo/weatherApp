@@ -16,5 +16,6 @@ typedef void (^SaveCompletionBlock)(id object, NSError * error);
 +(NSArray *)allFromEntityWithName:(NSString *)name;
 +(NSManagedObject *)entityWithName:(NSString *)name attribute:(NSString *)attribute value:(id)value;
 +(NSManagedObject *)createNewEntityWithName:(NSString *)name andDictionary:(NSDictionary *)dictionary;
++(BOOL)removeEntity:(NSManagedObject *)obj;
 
 @end
