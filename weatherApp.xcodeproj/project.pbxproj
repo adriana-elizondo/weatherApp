@@ -10,11 +10,12 @@
 		26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C311CE70F4E00F38C41 /* SearchHelper.m */; };
 		26054C361CE71B7A00F38C41 /* WeatherCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C351CE71B7A00F38C41 /* WeatherCollectionViewCell.m */; };
 		26054C391CE7300A00F38C41 /* ConditionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26054C381CE7300A00F38C41 /* ConditionStatus.m */; };
-		262221FE1CE98B41008245CB /* ForecastTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 262221FD1CE98B41008245CB /* ForecastTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		262221FE1CE98B41008245CB /* ForecastTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 262221FD1CE98B41008245CB /* ForecastTableViewCell.m */; };
 		2634C7FA1CE705F500DFC654 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634C7F91CE705F500DFC654 /* SearchViewController.m */; };
 		26ABCCE11CE89AEC0044BB6F /* City+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCDE1CE89AEC0044BB6F /* City+CoreDataProperties.m */; };
 		26ABCCE21CE89AEC0044BB6F /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE01CE89AEC0044BB6F /* City.m */; };
 		26ABCCE51CE89B3A0044BB6F /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */; };
+		6000E0BA1CEB25870047E7FB /* WeatherDetailHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6000E0B91CEB25870047E7FB /* WeatherDetailHelper.m */; };
 		603D60AC1CE46D2A004D5A4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AB1CE46D2A004D5A4B /* main.m */; };
 		603D60AF1CE46D2A004D5A4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D60AE1CE46D2A004D5A4B /* AppDelegate.m */; };
 		603D60B51CE46D2A004D5A4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603D60B31CE46D2A004D5A4B /* Main.storyboard */; };
@@ -54,6 +55,8 @@
 		26ABCCE01CE89AEC0044BB6F /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = City.m; path = CoreData/City.m; sourceTree = "<group>"; };
 		26ABCCE31CE89B3A0044BB6F /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataHelper.h; path = Helpers/CoreDataHelper.h; sourceTree = "<group>"; };
 		26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataHelper.m; path = Helpers/CoreDataHelper.m; sourceTree = "<group>"; };
+		6000E0B81CEB25870047E7FB /* WeatherDetailHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeatherDetailHelper.h; path = Helpers/WeatherDetailHelper.h; sourceTree = "<group>"; };
+		6000E0B91CEB25870047E7FB /* WeatherDetailHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeatherDetailHelper.m; path = Helpers/WeatherDetailHelper.m; sourceTree = "<group>"; };
 		603D60A71CE46D2A004D5A4B /* weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		603D60AB1CE46D2A004D5A4B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		603D60AD1CE46D2A004D5A4B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 				26054C381CE7300A00F38C41 /* ConditionStatus.m */,
 				26ABCCE31CE89B3A0044BB6F /* CoreDataHelper.h */,
 				26ABCCE41CE89B3A0044BB6F /* CoreDataHelper.m */,
+				6000E0B81CEB25870047E7FB /* WeatherDetailHelper.h */,
+				6000E0B91CEB25870047E7FB /* WeatherDetailHelper.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -397,6 +402,7 @@
 				60895F341CE5B53F00A40C86 /* MainDataModel.m in Sources */,
 				60895F1C1CE5A2C400A40C86 /* FormattingHelper.m in Sources */,
 				60895F2E1CE5A90400A40C86 /* BaseRequestParameters.m in Sources */,
+				6000E0BA1CEB25870047E7FB /* WeatherDetailHelper.m in Sources */,
 				603D60AC1CE46D2A004D5A4B /* main.m in Sources */,
 				26054C321CE70F4E00F38C41 /* SearchHelper.m in Sources */,
 			);

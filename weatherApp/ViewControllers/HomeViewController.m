@@ -22,7 +22,6 @@
 
 @interface HomeViewController ()<UISearchBarDelegate, UISearchDisplayDelegate,UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, LocationHelperDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *currentDate;
 @property (weak, nonatomic) IBOutlet UILabel *currentTemperature;
 @property (weak, nonatomic) IBOutlet UIImageView *conditionImage;
 @property (weak, nonatomic) IBOutlet UILabel *cityNameLabel;
@@ -53,11 +52,8 @@
     self.currentUnit = @"°C";
     self.laterTodayForecast = [NSArray new];
     self.nextDaysForecast = [NSArray new];
-    self.currentDate.text = [FormattingHelper currentDate];
-    self.searchDisplayController.searchResultsTableView.tableFooterView = [[UIView alloc] init];
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateViewWithCity:) name:@"updatedCity" object:nil];
-
+    
 }
 
 - (void)dealloc
@@ -76,11 +72,18 @@
     [super didReceiveMemoryWarning];
 }
 
+-(void)setUpUi{
+    self.searchDisplayController.searchResultsTableView.tableFooterView = [[UIView alloc] init];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+}
+
 -(void)updateViewWithCity:(NSNotification *)notification{
     NSString *cityName = notification.object;
-    if ([cityName isEqualToString:self.cityName]) {
-        return;
-    }
     self.cityNameLabel.text = cityName;
     [self getCityWithName:cityName];
 }
@@ -89,6 +92,7 @@
     self.messageLabel.hidden = YES;
     MeasurementModel *latestMeasurement = (MeasurementModel *)[forecast.measureMeantsList objectAtIndex:0];
     WeatherModel *weather = latestMeasurement.weather[0];
+    
     self.weatherDescriptionLabel.text = weather.weatherDescription;
     [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
     self.foreCastTableView.backgroundColor = self.view.backgroundColor;
@@ -132,7 +136,6 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     WeatherCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"weatherCell" forIndexPath:indexPath];
-    
     MeasurementModel *current = [self.laterTodayForecast objectAtIndex:indexPath.row];
     cell.weatherImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
     cell.maxMinTemperatureLabel.text = [FormattingHelper maxMinTemperatureWithMeasurement:current andUnit:self.currentUnit];
@@ -168,10 +171,10 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ForecastTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"forecastCell"];
     cell.backgroundColor = indexPath.row %2 == 0 ? [UIColor clearColor] : [UIColor colorWithWhite:5.0 alpha:.5];
-        MeasurementModel *current = [self.nextDaysForecast objectAtIndex:indexPath.row];
-        cell.showHideButton.hidden = YES;
-        cell.forecastImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
-        cell.dateLabel.text = [FormattingHelper datePlusDays:indexPath.row];
+    MeasurementModel *current = [self.nextDaysForecast objectAtIndex:indexPath.row];
+    cell.showHideButton.hidden = YES;
+    cell.forecastImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
+    cell.dateLabel.text = [FormattingHelper datePlusDays:indexPath.row];
     return cell;
 }
 
@@ -192,7 +195,7 @@
             }
         }];
     }
-
+    
 }
 
 

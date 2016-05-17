@@ -39,10 +39,6 @@
     [self setUp];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedCity" object:self.currentCity.name];
-}
-
 -(void)setUp{
     [self.navigationItem setHidesBackButton:YES];
     self.searchResults = [NSMutableArray new];
@@ -163,6 +159,7 @@
 
 #pragma mark - Go to city details
 -(void)goToCityDetails{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedCity" object:self.currentCity.name];
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
