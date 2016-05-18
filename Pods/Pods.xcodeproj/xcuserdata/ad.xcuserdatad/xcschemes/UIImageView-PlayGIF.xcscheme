@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C85CB78D5C0592A08BC546A608CD7FFF'
-               BlueprintName = 'Pods-weatherApp'
+               BlueprintIdentifier = '4FA41EDFF6C97F8B69B9E4445BA85177'
+               BlueprintName = 'UIImageView-PlayGIF'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-weatherApp.a'>
+               BuildableName = 'libUIImageView-PlayGIF.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

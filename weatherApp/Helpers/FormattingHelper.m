@@ -38,8 +38,8 @@
     return cityName;
 }
 
-+(NSString*)maxMinTemperatureWithMeasurement:(MeasurementModel *)measurement andUnit:(NSString *)unit{
-    return [NSString stringWithFormat:@"%i%@ ↑ / %i%@ ↓", (int)measurement.mainData.temperatureMax,unit, (int)measurement.mainData.temperatureMin, unit];
++(NSString*)maxMinTemperatureWithMax:(NSInteger)max andMin:(NSInteger)min{
+    return [NSString stringWithFormat:@"%li° MAX / %li° MIN", (long)max, min];
 }
 
 +(NSString*)formatedTimeWithDate:(NSString *)date{
@@ -126,5 +126,9 @@
     
     
     return status;
+}
+
++(NSInteger)celsiusToFarenheit:(CGFloat)celsius{
+    return (int)((celsius * 9.0f) / 5.0f) + 32.0f;
 }
 @end

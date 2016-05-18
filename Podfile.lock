@@ -20,17 +20,20 @@ PODS:
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
+  - UIImageView-PlayGIF (1.0.5)
 
 DEPENDENCIES:
   - AFNetworking
   - MagicalRecord
   - Mantle
+  - UIImageView-PlayGIF
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
+  UIImageView-PlayGIF: 445c8b31b3a43271dd3d565d9c0c612fa59ae830
 
-PODFILE CHECKSUM: 9e9d60940f3adb0f1874f79c1aa064a04c2b2be0
+PODFILE CHECKSUM: 35b0800a016c58752b66f75cda76397ac6b05035
 
 COCOAPODS: 1.0.0

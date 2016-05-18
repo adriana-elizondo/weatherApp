@@ -6,19 +6,16 @@
 //  Copyright © 2016 Adriana Elizondo Aguayo. All rights reserved.
 //
 #import "CityHelper.h"
-#import "CityModel.h"
 #import "ConditionStatus.h"
 #import "CoreDataHelper.h"
-#import "ForecastModel.h"
 #import "ForecastTableViewCell.h"
 #import "FormattingHelper.h"
 #import "HomeViewController.h"
 #import "LocationHelper.h"
-#import "MainDataModel.h"
-#import "MeasurementModel.h"
 #import "SearchHelper.h"
-#import "WeatherModel.h"
 #import "WeatherCollectionViewCell.h"
+#import "WeatherDetailHelper.h"
+#import <UIImageView-PlayGIF/UIImageView+PlayGIF.h>
 
 @interface HomeViewController ()<UISearchBarDelegate, UISearchDisplayDelegate,UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, LocationHelperDelegate>
 
@@ -34,13 +31,17 @@
 @property (weak, nonatomic) IBOutlet UIImageView *humidityImage;
 @property (weak, nonatomic) IBOutlet UIButton *showHideButton;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *changeUnitButton;
+@property (weak, nonatomic) IBOutlet UILabel *currentUnitLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingGif;
 
-@property (nonatomic, strong) NSString *currentUnit;
 @property (nonatomic, strong) NSArray *laterTodayForecast;
 @property (nonatomic, strong) NSArray *nextDaysForecast;
 @property (nonatomic, strong) NSString *cityName;
+@property (nonatomic, strong) ForecastModel *currentForecast;
 
 @property BOOL isForecastShown;
+@property BOOL isCelsius;
 
 @end
 
@@ -48,8 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.currentUnit = @"°C";
+    [self setUpUi];
+    self.isCelsius = YES;
     self.laterTodayForecast = [NSArray new];
     self.nextDaysForecast = [NSArray new];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateViewWithCity:) name:@"updatedCity" object:nil];
@@ -80,6 +81,8 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    self.loadingGif.gifPath = [[NSBundle mainBundle] pathForResource:@"loading" ofType:@"gif"];
+    [self.loadingGif startGIF];
 }
 
 -(void)updateViewWithCity:(NSNotification *)notification{
@@ -90,16 +93,21 @@
 
 -(void)updateUiWithForecast:(ForecastModel *)forecast{
     self.messageLabel.hidden = YES;
-    MeasurementModel *latestMeasurement = (MeasurementModel *)[forecast.measureMeantsList objectAtIndex:0];
-    WeatherModel *weather = latestMeasurement.weather[0];
+    [self.loadingGif stopGIF];
+    self.loadingGif.hidden = YES;
     
-    self.weatherDescriptionLabel.text = weather.weatherDescription;
-    [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].conditionColor];
+    self.weatherDescriptionLabel.text = [WeatherDetailHelper weatherDescriptionWithForecastModel:forecast];
+    [self.view setBackgroundColor:[FormattingHelper conditionStatusWithWeather:[WeatherDetailHelper weatherWithForecastModel:forecast]].conditionColor];
     self.foreCastTableView.backgroundColor = self.view.backgroundColor;
-    [self.conditionImage setImage:[FormattingHelper conditionStatusWithWeather:latestMeasurement.weather[0]].contidionImage];
-    self.currentTemperature.text = [NSString stringWithFormat:@"%i °C", (int)latestMeasurement.mainData.temperature];
-    self.maxMinTemperature.text = [FormattingHelper maxMinTemperatureWithMeasurement:latestMeasurement andUnit:self.currentUnit];
-    self.humidityLabel.text = [NSString stringWithFormat:@"%i %%",(int)latestMeasurement.mainData.humidity];
+    [self.conditionImage setImage:[FormattingHelper conditionStatusWithWeather:[WeatherDetailHelper weatherWithForecastModel:forecast]].contidionImage];
+    
+    self.currentTemperature.text = [NSString stringWithFormat:@"%lu °", (long)[WeatherDetailHelper weatherTemperatureWithForecastModel:forecast andUnit:self.isCelsius]];
+    self.currentUnitLabel.text = self.isCelsius ? @"C" : @"F";
+    [self.changeUnitButton setTitle: self.isCelsius ? @"F" : @"C" forState:UIControlStateNormal];
+    self.maxMinTemperature.text = [FormattingHelper maxMinTemperatureWithMax:[WeatherDetailHelper weatherMaximumTemperatureWithForecastModel:forecast andUnit:self.isCelsius] andMin:[WeatherDetailHelper weatherMinimumTemperatureWithForecastModel:forecast andUnit:self.isCelsius]];
+    
+    self.humidityLabel.text = [NSString stringWithFormat:@"%lu %%",(long)[WeatherDetailHelper weatherHumidityWithForecastModel:forecast]];
+    
     [self.humidityImage setImage:[UIImage imageNamed:@"water"]];
     [self.showHideButton setTitle:@"Forecast!" forState:UIControlStateNormal];
     [self.forecastCollectionView reloadData];
@@ -117,9 +125,10 @@
 
 -(void)getCityWithName:(NSString *)name{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [CityHelper forecastForcityWithName:name WithCompletion:^(ForecastModel *response, NSError *error) {
-        self.laterTodayForecast = [FormattingHelper filterResultsForToday:response.measureMeantsList];
+    [CityHelper forecastForcityWithName:name WithCompletion:^(id response, NSError *error) {
+        self.laterTodayForecast = [FormattingHelper filterResultsForToday:[CityHelper measurementsListWithForecast:response]];
         [self updateUiWithForecast:response];
+        self.currentForecast = response;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
@@ -138,7 +147,7 @@
     WeatherCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"weatherCell" forIndexPath:indexPath];
     MeasurementModel *current = [self.laterTodayForecast objectAtIndex:indexPath.row];
     cell.weatherImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
-    cell.maxMinTemperatureLabel.text = [FormattingHelper maxMinTemperatureWithMeasurement:current andUnit:self.currentUnit];
+    cell.maxMinTemperatureLabel.text = [FormattingHelper maxMinTemperatureWithMax:[WeatherDetailHelper weatherMaximumTemperatureWithMeasurementModel:current andUnit:self.isCelsius] andMin:[WeatherDetailHelper weatherMinimumTemperatureWithMeasurementModel:current andUnit:self.isCelsius]];
     cell.timeLabel.text = [FormattingHelper formatedTimeWithDate:current.dateUpdated];
     return cell;
 }
@@ -146,7 +155,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat width = (self.view.bounds.size.width / 3) - 10;
+    CGFloat width = (self.view.bounds.size.width / 3) + 10;
     return CGSizeMake(width, self.forecastCollectionView.frame.size.height);
 }
 
@@ -176,6 +185,11 @@
     cell.forecastImage.image = [FormattingHelper conditionStatusWithWeather:current.weather[0]].contidionImage;
     cell.dateLabel.text = [FormattingHelper datePlusDays:indexPath.row];
     return cell;
+}
+- (IBAction)toggleTemperature:(id)sender {
+    self.isCelsius = !self.isCelsius;
+    [self updateUiWithForecast:self.currentForecast];
+    [self.forecastCollectionView reloadData];
 }
 
 

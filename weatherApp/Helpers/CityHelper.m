@@ -113,4 +113,8 @@
     }
     return city;
 }
+
++(NSArray *)measurementsListWithForecast:(ForecastModel *)forecast{
+    return forecast.measureMeantsList;
+}
 @end

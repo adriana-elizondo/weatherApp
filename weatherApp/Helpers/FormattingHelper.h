@@ -16,10 +16,10 @@
 +(NSString *)currentTime;
 +(NSString *)currentDate;
 +(NSString *)datePlusDays:(NSInteger)days;
-+(NSString*)maxMinTemperatureWithMeasurement:(MeasurementModel *)measurement andUnit:(NSString *)unit;
++(NSString*)maxMinTemperatureWithMax:(NSInteger)max andMin:(NSInteger)min;
 +(NSArray *)filterResultsForToday:(NSArray *)arrayToFilter;
 +(NSString*)formatedTimeWithDate:(NSString *)date;
 +(ConditionStatus *)conditionStatusWithWeather:(WeatherModel *)weather;
 +(NSString *)parsedCityWithName:(NSString *)cityName;
-
++(NSInteger)celsiusToFarenheit:(CGFloat)celsius;
 @end
